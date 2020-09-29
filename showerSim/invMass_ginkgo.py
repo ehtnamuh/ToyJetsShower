@@ -90,10 +90,10 @@ class Simulator(PyroSimulator):
 
                 jet_list.append(jet)
 
-                print(" N const = ", len(jet['leaves']))
+                logger.info(" N const = %s", len(jet['leaves']))
 
                 if len(jet_list) % 1000 == 0:
-                    print("Generated ", len(jet_list), "jets with ", self.minLeaves, "<=number of leaves<", self.maxLeaves)
+                    logger.info(f"Generated {len(jet_list)} jets with {self.minLeaves} <= number of leaves < {self.maxLeaves}")
 
 
                 logger.info(f" Leaves  = {jet['leaves']}")
@@ -114,7 +114,7 @@ class Simulator(PyroSimulator):
 
             i += 1
             if i%1000==0:
-                print("Generated ",i," jets")
+                logger.info(f"Generated {i} jets")
 
 
         return jet_list
@@ -285,8 +285,8 @@ def _traverse_rec(
         pR_mu = labEP(tp = t0, Ep_lab = root[0], Pp_lab = P0_lab, n = n0, Echild_CM = ER_cm, Pchild_CM = P_CM, p_versor = - r_CM)
 
         logger.debug(f" Off-shell subjets mass = {np.sqrt(tL), np.sqrt(tR)}")
-        logger.debug(f"pL inv mass from p^2 in lab  frame: {np.sqrt(pL_mu[0]**2-np.linalg.norm(pL_mu[1::])**2)}")
-        logger.debug(f"pR inv mass from p^2 in lab  frame: {np.sqrt(pR_mu[0] ** 2 - np.linalg.norm(pR_mu[1::]) ** 2)}")
+        logger.debug(f"pL inv mass from p^2 in lab  frame: {np.sqrt(max(pL_mu[0]**2-np.linalg.norm(pL_mu[1::])**2, 1.e-9))}")
+        logger.debug(f"pR inv mass from p^2 in lab  frame: {np.sqrt(max(pR_mu[0] ** 2 - np.linalg.norm(pR_mu[1::]) ** 2, 1.e-9))}")
         logger.debug(f"----"*10)
 
 
@@ -350,7 +350,7 @@ def labEP(tp= None,Ep_lab= None, Pp_lab= None , n= None, Echild_CM= None, Pchild
     Plab = - Pp_lab/np.sqrt(tp) * Echild_CM * n + Pchild_CM * (p_versor + (Ep_lab/np.sqrt(tp) - 1) * np.dot(p_versor,n) * n)
 
     if Elab < np.linalg.norm(Plab):
-        print("---" * 10)
+        logger.debug("---" * 10)
         logger.debug(f" Elab = {Elab}")
         logger.debug(f" Plab = {np.linalg.norm(Plab)}")
         logger.debug(f" sqrt(tp) = {np.sqrt(tp)}")

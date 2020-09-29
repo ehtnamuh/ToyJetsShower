@@ -56,9 +56,9 @@ args = parser.parse_args()
 rate2=torch.tensor(8.)
 
 # Parameters to get ~<10 constituents to test the trellis algorithm
-# pt_min = torch.tensor(4.**2)
+pt_min = torch.tensor(4.**2)
 
-pt_min = torch.tensor(0.3**2)
+# pt_min = torch.tensor(0.3**2)
 
 ### Physics inspired parameters to get ~ between 20 and 50 constituents
 W_rate = 3.
