@@ -94,6 +94,7 @@ class Simulator(PyroSimulator):
     def save(jet_list, outdir, filename):
         out_filename = os.path.join(outdir, filename + ".pkl")
         with open(out_filename, "wb") as f:
+            print(f"outdir: {outdir} filename: {filename}")
             pickle.dump(jet_list, f, protocol=2)
 
 

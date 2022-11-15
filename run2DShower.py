@@ -95,7 +95,7 @@ elif args.jetType == "QCDjets":
 elif args.jetType == "Topjets":
     simulator = exp2DShowerTree.Simulator(jet_p=torch.tensor([500.,400.]), Mw=torch.tensor(173.), pt_cut=0.04, Delta_0=60., num_samples=int(args.Nsamples))
 
-if args.jetType == "TrellisMw300":
+elif args.jetType == "TrellisMw300":
     ## TRELLIS
     jetPT = torch.tensor([0., 0.])
     rate = torch.tensor(10.)
@@ -104,7 +104,7 @@ if args.jetType == "TrellisMw300":
     pt_min = 0.08
     simulator = exp2DShowerTree.Simulator(jet_p=jetPT, Mw=torch.tensor(300.), pt_cut=pt_min, Delta_0=60., num_samples=int(args.Nsamples))
 
-if args.jetType == "TrellisMw01":
+elif args.jetType == "TrellisMw01":
     ## TRELLIS
     jetPT = torch.tensor([0., 0.])
     rate = torch.tensor(2.2)
@@ -112,7 +112,7 @@ if args.jetType == "TrellisMw01":
     pt_min = 0.006
     simulator = exp2DShowerTree.Simulator(jet_p=jetPT, Mw=torch.tensor(0.1), pt_cut=pt_min, Delta_0=60., num_samples=int(args.Nsamples))
 
-if args.jetType == "TrellisMw01B":
+elif args.jetType == "TrellisMw01B":
     ## TRELLIS
     jetPT = torch.tensor([0., 0.])
     rate = torch.tensor(2.)
@@ -122,6 +122,7 @@ if args.jetType == "TrellisMw01B":
 
 
 else:
+    print(args.jetType)
     raise ValueError(f"Please choose a valid jet type (QCDjets, Wjets or Topjets)")
 
 # Values for tests
@@ -186,14 +187,14 @@ else:
 
 
 
-ToyModelDir = "/scratch/sm4511/ToyJetsShower/data/"+args.jetType
-TreeAlgoDir = "/scratch/sm4511/TreeAlgorithms/data/"+args.jetType+"/Truth/"
+ToyModelDir = "/home/samin/Desktop/Projects/CERN/Ginko/ToyJetsShower/scratch/sm4511/ToyJetsShower/data/"+args.jetType
+TreeAlgoDir = "/home/samin/Desktop/Projects/CERN/Ginko/ToyJetsShower/scratch/sm4511/TreeAlgorithms/data/"+args.jetType+"/Truth/"
 
 os.system("mkdir -p "+ToyModelDir)
 os.system("mkdir -p "+TreeAlgoDir)
 
-# simulator.save(jet_list, TreeAlgoDir, "tree_" + str(args.Nsamples) + "_truth_" + str(args.id))
-# simulator.save(jet_list, ToyModelDir, "tree_"+str(args.Nsamples)+"_truth_"+str(args.id))
+simulator.save(jet_list, TreeAlgoDir, "tree_" + str(args.Nsamples) + "_truth_" + str(args.id))
+simulator.save(jet_list, ToyModelDir, "tree_"+str(args.Nsamples)+"_truth_"+str(args.id))
 
 
 
